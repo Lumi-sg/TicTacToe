@@ -1,0 +1,63 @@
+body {
+	background-color: #181818;
+	color: white;
+}
+
+.cell {
+	width: 10rem;
+	height: 10rem;
+	border: 2px solid;
+	box-shadow: 0 0 0 2px;
+	font-size: 8rem;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.game-container {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.cellContainer {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	width: auto;
+	margin-top: 5rem;
+	margin-bottom: 2rem;
+	background-color: #202020;
+}
+
+.restartButton {
+	border: none;
+	color: rgb(0, 0, 0);
+	border-radius: 10px;
+	font-size: 1rem;
+	margin: 4px 2px;
+	cursor: pointer;
+	transition: 100ms;
+	font-weight: bold;
+	width: 7rem;
+	height: 2rem;
+	background-color: #aaaaaa;
+	margin-top: 2rem;
+	transition: 150ms;
+}
+
+.restartButton:hover {
+	background-color: #fffefe;
+	transition: 150ms;
+}
+
+h1 {
+	font-size: 5rem;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+h3 {
+	font-size: 2.5rem;
+}
