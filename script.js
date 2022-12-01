@@ -29,16 +29,18 @@ function startGame() {
 
 function cellClicked() {
 	const cellIndex = this.getAttribute("cellIndex");
+	// console.log(this);
+	// console.log(cellIndex);
 
 	if (gameboard[cellIndex] != "" || !isGameActive) {
 		return;
 	}
 	updateCell(this, cellIndex);
-	checkWinner();
+	checkWinner(cellIndex);
 }
 
-function updateCell(cell, index) {
-	gameboard[index] = currentPlayer;
+function updateCell(cell, cellIndex) {
+	gameboard[cellIndex] = currentPlayer;
 	cell.textContent = currentPlayer;
 }
 
@@ -49,6 +51,30 @@ function switchPlayer() {
 	} else {
 		currentPlayer = "X";
 		statusText.textContent = `${currentPlayer}'s turn!`;
+	}
+}
+
+function highlightWinningCells() {
+	for (let i = 0; i < winConditions.length; i++) {
+		const condition = winConditions[i];
+		const cellColorOne = cells[condition[0]];
+		const cellColorTwo = cells[condition[1]];
+		const cellColorThree = cells[condition[2]];
+
+		if (
+			cellColorOne.textContent === cellColorTwo.textContent &&
+			cellColorTwo.textContent === cellColorThree.textContent
+		) {
+			if (
+				cellColorOne.textContent != "" &&
+				cellColorTwo.textContent != "" &&
+				cellColorThree.textContent != ""
+			) {
+				cellColorOne.style.backgroundColor = "green";
+				cellColorTwo.style.backgroundColor = "green";
+				cellColorThree.style.backgroundColor = "green";
+			}
+		}
 	}
 }
 
@@ -66,6 +92,7 @@ function checkWinner() {
 		}
 		if (cellOne === cellTwo && cellTwo === cellThree) {
 			roundWon = true;
+			highlightWinningCells();
 			break;
 		}
 	}
@@ -86,5 +113,6 @@ function restartGame() {
 	gameboard = ["", "", "", "", "", "", "", "", ""];
 	cells.forEach((cell) => (cell.textContent = ""));
 	statusText.textContent = `${currentPlayer}'s turn!`;
+	cells.forEach((cell) => (cell.style.backgroundColor = "#202020"));
 	isGameActive = true;
 }
