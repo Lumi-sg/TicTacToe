@@ -24,7 +24,7 @@ function startGame() {
 	isGameActive = true;
 	cells.forEach((cell) => cell.addEventListener("click", cellClicked));
 	restartButton.addEventListener("click", restartGame);
-	switchPlayer();
+	statusText.textContent = `${currentPlayer}'s turn!`;
 }
 
 function cellClicked() {
