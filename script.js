@@ -29,9 +29,6 @@ function startGame() {
 
 function cellClicked() {
 	const cellIndex = this.getAttribute("cellIndex");
-	// console.log(this);
-	// console.log(cellIndex);
-
 	if (gameboard[cellIndex] != "" || !isGameActive) {
 		return;
 	}
