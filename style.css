@@ -73,6 +73,8 @@ h3 {
 }
 
 .footer {
+	position: fixed;
+	bottom: 5%;
 	margin-top: auto;
 	margin-bottom: auto;
 	font-size: 1.2rem;
