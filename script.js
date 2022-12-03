@@ -1,8 +1,10 @@
 const cells = document.querySelectorAll(".cell");
 const statusText = document.querySelector(".statusText");
 const restartButton = document.querySelector(".restartButton");
+const twoPlayerButton = document.querySelector(".twoPlayer");
+const aiButton = document.querySelector(".AI");
 
-restartButton.addEventListener("click", () => {});
+restartButton.style.display = "none";
 
 const winConditions = [
 	[0, 1, 2],
@@ -15,25 +17,68 @@ const winConditions = [
 	[2, 4, 6],
 ];
 let gameboard = ["", "", "", "", "", "", "", "", ""];
+let aiMode = false;
 let currentPlayer = "X";
 let isGameActive = false;
 
-startGame();
+twoPlayerButton.addEventListener("click", () => {
+	aiMode = false;
+	startGame();
+});
+aiButton.addEventListener("click", () => {
+	aiMode = true;
+	startGame();
+});
 
 function startGame() {
+	currentPlayer = "X";
+	gameboard = ["", "", "", "", "", "", "", "", ""];
+	cells.forEach((cell) => (cell.textContent = ""));
+	twoPlayerButton.style.display = "none";
+	aiButton.style.display = "none";
+	cells.forEach((cell) => (cell.style.backgroundColor = "#202020"));
 	isGameActive = true;
 	cells.forEach((cell) => cell.addEventListener("click", cellClicked));
+	restartButton.style.display = "block";
 	restartButton.addEventListener("click", restartGame);
 	statusText.textContent = `${currentPlayer}'s turn!`;
 }
 
 function cellClicked() {
-	const cellIndex = this.getAttribute("cellIndex");
-	if (gameboard[cellIndex] != "" || !isGameActive) {
-		return;
+	if (!aiMode) {
+		const cellIndex = this.getAttribute("cellIndex");
+		if (gameboard[cellIndex] != "" || !isGameActive) {
+			return;
+		}
+		updateCell(this, cellIndex);
+		checkWinner(cellIndex);
+	} else {
+		if (currentPlayer === "X") {
+			const cellIndex = this.getAttribute("cellIndex");
+			if (gameboard[cellIndex] != "" || !isGameActive) {
+				return;
+			}
+			updateCell(this, cellIndex);
+			checkWinner(cellIndex);
+			aiPickCell();
+		}
 	}
-	updateCell(this, cellIndex);
-	checkWinner(cellIndex);
+}
+
+function aiPickCell() {
+	let randomCellIndex = getRandomCell();
+	let cellElement = cells[randomCellIndex];
+	updateCell(cellElement, randomCellIndex);
+	checkWinner(randomCellIndex);
+}
+
+function getRandomCell() {
+	let randomCell = [Math.floor(Math.random() * gameboard.length)];
+	if (gameboard[randomCell] !== "") {
+		getRandomCell();
+	} else {
+		return randomCell;
+	}
 }
 
 function updateCell(cell, cellIndex) {
@@ -73,6 +118,7 @@ function highlightWinningCells() {
 			}
 		}
 	}
+	initalizeGame();
 }
 
 function checkWinner() {
@@ -95,21 +141,26 @@ function checkWinner() {
 	}
 
 	if (roundWon) {
-		statusText.textContent = `${currentPlayer} is the winner!`;
+		statusText.textContent = `${currentPlayer} is the winner! Play again?`;
 		isGameActive = false;
 	} else if (!gameboard.includes("")) {
-		statusText.textContent = "Draw!";
+		statusText.textContent = "Draw! Play again?";
 		isGameActive = false;
 	} else {
 		switchPlayer();
 	}
 }
 
+function initalizeGame() {
+	statusText.textContent = "Play Again?";
+	restartButton.style.display = "none";
+	twoPlayerButton.style.display = "block";
+	aiButton.style.display = "block";
+}
+
 function restartGame() {
-	currentPlayer = "X";
-	gameboard = ["", "", "", "", "", "", "", "", ""];
-	cells.forEach((cell) => (cell.textContent = ""));
-	statusText.textContent = `${currentPlayer}'s turn!`;
-	cells.forEach((cell) => (cell.style.backgroundColor = "#202020"));
-	isGameActive = true;
+	startGame();
+	// statusText.textContent = `${currentPlayer}'s turn!`;
+	//
+	// isGameActive = true;
 }

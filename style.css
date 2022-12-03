@@ -31,7 +31,7 @@ body {
 	background-color: #202020;
 }
 
-.restartButton {
+.button {
 	border: none;
 	color: rgb(0, 0, 0);
 	border-radius: 10px;
@@ -47,7 +47,7 @@ body {
 	transition: 150ms;
 }
 
-.restartButton:hover {
+.button:hover {
 	background-color: #fffefe;
 	transition: 150ms;
 }
