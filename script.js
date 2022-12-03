@@ -41,7 +41,11 @@ function startGame() {
 	cells.forEach((cell) => cell.addEventListener("click", cellClicked));
 	restartButton.style.display = "block";
 	restartButton.addEventListener("click", restartGame);
-	statusText.textContent = `${currentPlayer}'s turn!`;
+	if (aiMode) {
+		statusText.textContent = "AI Mode";
+	} else {
+		statusText.textContent = `${currentPlayer}'s turn!`;
+	}
 }
 
 function cellClicked() {
@@ -66,18 +70,30 @@ function cellClicked() {
 }
 
 function aiPickCell() {
-	let randomCellIndex = getRandomCell();
-	let cellElement = cells[randomCellIndex];
-	updateCell(cellElement, randomCellIndex);
-	checkWinner(randomCellIndex);
+	if (isGameActive) {
+		let randomCellIndex = getRandomCell();
+		let cellElement = cells[randomCellIndex];
+		updateCell(cellElement, randomCellIndex);
+		checkWinner(randomCellIndex);
+	} else {
+		return;
+	}
 }
 
 function getRandomCell() {
-	let randomCell = [Math.floor(Math.random() * gameboard.length)];
-	if (gameboard[randomCell] !== "") {
-		getRandomCell();
-	} else {
-		return randomCell;
+	let i = 0;
+	while (true) {
+		let temp = Math.floor(Math.random() * 8);
+		if (gameboard[temp] === "X" || gameboard[temp] === "O") {
+			i++;
+			// console.log(`Counter: ${i}`);
+			if (i > 50) {
+				break;
+			}
+			continue;
+		} else {
+			return temp;
+		}
 	}
 }
 
@@ -89,10 +105,18 @@ function updateCell(cell, cellIndex) {
 function switchPlayer() {
 	if (currentPlayer === "X") {
 		currentPlayer = "O";
-		statusText.textContent = `${currentPlayer}'s turn!`;
+		if (aiMode) {
+			statusText.textContent = "AI Mode";
+		} else {
+			statusText.textContent = `${currentPlayer}'s turn!`;
+		}
 	} else {
 		currentPlayer = "X";
-		statusText.textContent = `${currentPlayer}'s turn!`;
+		if (aiMode) {
+			statusText.textContent = "AI Mode";
+		} else {
+			statusText.textContent = `${currentPlayer}'s turn!`;
+		}
 	}
 }
 
