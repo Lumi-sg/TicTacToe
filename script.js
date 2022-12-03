@@ -17,6 +17,7 @@ const winConditions = [
 	[2, 4, 6],
 ];
 let gameboard = ["", "", "", "", "", "", "", "", ""];
+let validIndices = [];
 let aiMode = false;
 let currentPlayer = "X";
 let isGameActive = false;
@@ -81,25 +82,21 @@ function aiPickCell() {
 }
 
 function getRandomCell() {
-	let i = 0;
-	while (true) {
-		let temp = Math.floor(Math.random() * 8);
-		if (gameboard[temp] === "X" || gameboard[temp] === "O") {
-			i++;
-			// console.log(`Counter: ${i}`);
-			if (i > 50) {
-				break;
-			}
-			continue;
-		} else {
-			return temp;
-		}
-	}
+	let randomCellIndex = validIndices[Math.floor(Math.random() * validIndices.length)];
+	return randomCellIndex;
 }
 
 function updateCell(cell, cellIndex) {
+	validIndices = [];
 	gameboard[cellIndex] = currentPlayer;
 	cell.textContent = currentPlayer;
+
+	for (const cell of cells) {
+		if (cell.textContent === "") {
+			let cellIndex = cell.getAttribute("cellIndex");
+			validIndices.push(cellIndex);
+		}
+	}
 }
 
 function switchPlayer() {
