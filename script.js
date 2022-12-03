@@ -42,7 +42,7 @@ function startGame() {
 	restartButton.style.display = "block";
 	restartButton.addEventListener("click", restartGame);
 	if (aiMode) {
-		statusText.textContent = "AI Mode";
+		statusText.textContent = "A.I Mode";
 	} else {
 		statusText.textContent = `${currentPlayer}'s turn!`;
 	}
@@ -106,14 +106,14 @@ function switchPlayer() {
 	if (currentPlayer === "X") {
 		currentPlayer = "O";
 		if (aiMode) {
-			statusText.textContent = "AI Mode";
+			statusText.textContent = "A.I Mode";
 		} else {
 			statusText.textContent = `${currentPlayer}'s turn!`;
 		}
 	} else {
 		currentPlayer = "X";
 		if (aiMode) {
-			statusText.textContent = "AI Mode";
+			statusText.textContent = "A.I Mode";
 		} else {
 			statusText.textContent = `${currentPlayer}'s turn!`;
 		}
