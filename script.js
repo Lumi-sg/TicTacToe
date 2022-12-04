@@ -167,6 +167,7 @@ function checkWinner() {
 	} else if (!gameboard.includes("")) {
 		statusText.textContent = "Draw! Play again?";
 		isGameActive = false;
+		initalizeGame();
 	} else {
 		switchPlayer();
 	}
