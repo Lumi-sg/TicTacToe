@@ -65,7 +65,7 @@ function cellClicked() {
 			}
 			updateCell(this, cellIndex);
 			checkWinner(cellIndex);
-			aiPickCell();
+			const aiPickCellTimer = setTimeout(aiPickCell, 500);
 		}
 	}
 }
