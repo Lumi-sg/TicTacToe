@@ -139,7 +139,7 @@ function highlightWinningCells() {
 			}
 		}
 	}
-	initalizeGame();
+	initializeGame();
 }
 
 function checkWinner() {
@@ -167,13 +167,13 @@ function checkWinner() {
 	} else if (!gameboard.includes("")) {
 		statusText.textContent = "Draw! Play again?";
 		isGameActive = false;
-		initalizeGame();
+		initializeGame();
 	} else {
 		switchPlayer();
 	}
 }
 
-function initalizeGame() {
+function initializeGame() {
 	statusText.textContent = "Play Again?";
 	restartButton.style.display = "none";
 	twoPlayerButton.style.display = "block";
